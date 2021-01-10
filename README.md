@@ -1,78 +1,179 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Technical Test Backend Job2go
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Projek ini di buat intuk menghubungkan backend dengan frontend, project ini menggunakan teknologi laravel 7 dan MySQL yang terdiri dari beberapa modul seperti:
 
-## About Laravel
+- Register.
+- Login.
+- Reset Password.
+- Project.
+- Task.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Pertama clone project dari github dan simpan project di xampp.
+- Buat Database dengan nama job2go_test.
+- Migrasi tabel dengan menjalankan perintah.
+```java
+php artisan migrate
+```
+- Jalan project dengan perintah.
+```java
+php artisan serve
+```
+## API Documentasi
+### USER
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Method "USER" terdiri dari 3 fungsi yakni register dan login.
+| Method   | Url                    | Parameter (data)      |
+| -------- | ---------------------- | --------------------- |
+| **POST** | auth/register          | name, email, password, password_confirmation, level(admin,buruh)  |
+| **POST** | auth/login             | email, password       |
+| **POST** | auth/reset-password    | email, password       |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Contoh Response Register
+```java
+{
+    "message": "User successfully registered",
+    "user": {
+        "name": "Budi",
+        "email": "budi02@gmail.com",
+        "level": "admin",
+        "updated_at": "2021-01-10T05:56:41.000000Z",
+        "created_at": "2021-01-10T05:56:41.000000Z",
+        "id": 2
+    }
+}
+```
+### Contoh Response Login
+```java
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMVwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYxMDI1ODQzNSwiZXhwIjoxNjEwMjYyMDM1LCJuYmYiOjE2MTAyNTg0MzUsImp0aSI6IjhCcXdVNEJLWlZLQnh4Z20iLCJzdWIiOjEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.yAd6DYGmbB0EDvLafD1Ik1CRSLgCG9Vgnvcitud9IFo",
+    "token_type": "bearer",
+    "expires_in": 3600,
+    "user": {
+        "id": 1,
+        "name": "Budi",
+        "email": "budi01@gmail.com",
+        "level": "admin",
+        "email_verified_at": null,
+        "api_token": null,
+        "created_at": "2021-01-09T03:44:18.000000Z",
+        "updated_at": "2021-01-09T03:44:18.000000Z"
+    }
+}
+```
 
-## Learning Laravel
+## Project
+Method "PROJECT" terdiri dari 2 fungsi yakni register dan login.
+| Method   | Url                    | Parameter (data)              |
+| -------- | ---------------------- | ----------------------------- |
+| **GET**  | project/show           |                               |
+| **POST** | project/add            | name, description, due_date   |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Contoh Response show project
+```java
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "project 1",
+            "description": "coba project 1",
+            "due_date": "2021-01-10",
+            "created_at": "2021-01-10T04:26:46.000000Z",
+            "updated_at": "2021-01-10T04:26:46.000000Z"
+        },
+        {
+            "id": 2,
+            "name": "project 2",
+            "description": "coba project 2",
+            "due_date": "2021-01-20",
+            "created_at": "2021-01-10T04:40:33.000000Z",
+            "updated_at": "2021-01-10T04:40:33.000000Z"
+        }
+    ]
+}
+```
+### Contoh Response add project
+```java
+{
+    "data": {
+        "id": 2,
+        "name": "project 2",
+        "description": "coba project 2",
+        "due_date": "2021-01-20",
+        "created_at": "2021-01-10T04:40:33.000000Z",
+        "updated_at": "2021-01-10T04:40:33.000000Z"
+    }
+}
+```
+## Task
+Method "PROJECT" terdiri dari 3 fungsi yakni register dan login.
+| Method   | Url                    | Parameter (data)              |
+| -------- | ---------------------- | ----------------------------- |
+| **GET**  | task/show              |                               |
+| **GET**  | task/show-project-task |                               |
+| **POST** | task/add               | name, project, description, due_date   |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Contoh Response show task
+```java
+{
+    "data": [
+        {
+            "id": 1,
+            "project": 1,
+            "name": "Task",
+            "description": "coba Task 1",
+            "due_date": "2021-01-12",
+            "created_at": "2021-01-10T04:53:01.000000Z",
+            "updated_at": "2021-01-10T04:53:01.000000Z"
+        }
+    ]
+}
+```
+### Contoh Response show task with project
+```java
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "project 1",
+            "description": "coba project 1",
+            "due_date": "2021-01-10",
+            "created_at": "10/01/2021 04:26:46",
+            "updated_at": "10/01/2021 04:26:46",
+            "Task_detail": [
+                {
+                    "id": 1,
+                    "project": 1,
+                    "name": "Task",
+                    "description": "coba Task 1",
+                    "due_date": "2021-01-12",
+                    "created_at": "2021-01-10T04:53:01.000000Z",
+                    "updated_at": "2021-01-10T04:53:01.000000Z"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "project 2",
+            "description": "coba project 2",
+            "due_date": "2021-01-20",
+            "created_at": "10/01/2021 04:40:33",
+            "updated_at": "10/01/2021 04:40:33",
+            "Task_detail": []
+        }
+    ]
+}
+```
+### Contoh Response add task
+```java
+{
+    "data": {
+        "id": 1,
+        "project": "1",
+        "name": "Task",
+        "description": "coba Task 1",
+        "due_date": "2021-01-12",
+        "created_at": "2021-01-10T04:53:01.000000Z",
+        "updated_at": "2021-01-10T04:53:01.000000Z"
+    }
+}
+```
